@@ -1,5 +1,4 @@
 # 使用官方 MySQL 8.0 镜像作为基础
-ARG TARGETPLATFORM
 FROM mysql:8.0 AS builder
 
 # 设置环境变量，避免交互式提示
