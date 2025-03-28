@@ -29,8 +29,8 @@ jobs:
           file: ./Dockerfile # 指定 Dockerfile 路径
           push: true # 推送镜像
           tags: |
-            your-dockerhub-username/mysql-mecab:latest
-            your-dockerhub-username/mysql-mecab:${{ github.sha }}
+            kl3x/mysql-mecab:latest
+            kl3x/mysql-mecab:${{ github.sha }}
           # 启用构建缓存以加快后续构建速度 (可选)
           cache-from: type=gha
           cache-to: type=gha,mode=max

@@ -2,7 +2,7 @@
 
 [简体中文](README.cn.md)
 
-[![Docker Image CI](https://github.com/your-github-username/your-repo-name/actions/workflows/docker-publish.yml/badge.svg)](https://github.com/your-github-username/your-repo-name/actions/workflows/docker-publish.yml)
+[![Docker Image CI](https://github.com/stupidloud/mysql-with-mecab/actions/workflows/docker-publish.yml/badge.svg)](https://github.com/stupidloud/mysql-with-mecab/actions/workflows/docker-publish.yml)
 
 This repository contains the necessary files to build a Docker image based on `mysql:8.0-debian` that includes the [MeCab](https://taku910.github.io/mecab/) Full-Text Parser Plugin. This allows for Japanese full-text searching capabilities within MySQL.
 
@@ -14,7 +14,7 @@ This repository contains the necessary files to build a Docker image based on `m
 
 1.  Clone this repository:
     ```bash
-    git clone https://github.com/your-github-username/your-repo-name.git
+    git clone https://github.com/stupidloud/mysql-with-mecab.git
     cd your-repo-name
     ```
 2.  Build the Docker image:
@@ -36,7 +36,7 @@ Or in a `docker-compose.yml` file:
 ```yaml
 services:
   db:
-    image: mysql-mecab:latest # Or your published image, e.g., your-dockerhub-username/mysql-mecab:latest
+    image: mysql-mecab:latest # Or your published image, e.g., kl3x/mysql-mecab:latest
     container_name: mysql_with_mecab
     environment:
       MYSQL_ROOT_PASSWORD: your_root_password
@@ -62,7 +62,7 @@ This repository includes a GitHub Actions workflow (`.github/workflows/docker-pu
 
 **Setup:**
 
-1.  **Customize Image Name:** Before pushing, edit `.github/workflows/docker-publish.yml` and replace all occurrences of `your-dockerhub-username/mysql-mecab` with your desired Docker Hub repository name (e.g., `myusername/mysql-mecab`). Commit this change.
+1.  **Customize Image Name:** Before pushing, edit `.github/workflows/docker-publish.yml` and replace all occurrences of `kl3x/mysql-mecab` with your desired Docker Hub repository name (e.g., `myusername/mysql-mecab`). Commit this change.
 2.  **Configure Secrets:** In your GitHub repository settings (`Settings` -> `Secrets and variables` -> `Actions`), add the following repository secrets:
     *   `DOCKERHUB_USERNAME`: Your Docker Hub username.
     *   `DOCKERHUB_TOKEN`: A Docker Hub Access Token with push permissions. **Do not use your password.**
