@@ -2,8 +2,6 @@
 
 [English](README.md)
 
-[![Docker Image CI](https://github.com/stupidloud/mysql-with-mecab/actions/workflows/docker-publish.yml/badge.svg)](https://github.com/stupidloud/mysql-with-mecab/actions/workflows/docker-publish.yml)
-
 本仓库包含构建 Docker 镜像所需的文件。该镜像基于 `mysql:8.0-debian`，并集成了 [MeCab](https://taku910.github.io/mecab/) 全文解析插件。这使得在 MySQL 中能够进行日语全文搜索。
 
 ## 先决条件
@@ -15,7 +13,7 @@
 1.  克隆本仓库：
     ```bash
     git clone https://github.com/stupidloud/mysql-with-mecab.git
-    cd your-repo-name
+    cd mysql-with-mecab
     ```
 2.  构建 Docker 镜像：
     ```bash
@@ -36,7 +34,7 @@ docker run --name some-mysql-mecab -e MYSQL_ROOT_PASSWORD=my-secret-pw -d mysql-
 ```yaml
 services:
   db:
-    image: mysql-mecab:latest # 或者您发布的镜像，例如：kl3x/mysql-mecab:latest
+    image: mysql-mecab:latest # 使用本地构建的镜像，或替换为您发布的镜像（例如：your-dockerhub-username/mysql-mecab:latest）
     container_name: mysql_with_mecab
     environment:
       MYSQL_ROOT_PASSWORD: your_root_password
@@ -58,20 +56,7 @@ SHOW PLUGINS LIKE 'mecab';
 
 ## 自动构建 (GitHub Actions)
 
-本仓库包含一个 GitHub Actions 工作流 (`.github/workflows/docker-publish.yml`)，该工作流会在每次有更改推送到 `main` 分支时，自动构建 Docker 镜像并将其推送到 Docker Hub。
-
-**设置步骤：**
-
-1.  **自定义镜像名称：** 在推送之前，编辑 `.github/workflows/docker-publish.yml` 文件，将所有 `kl3x/mysql-mecab` 替换为您期望的 Docker Hub 仓库名称（例如 `myusername/mysql-mecab`）。提交此更改。
-2.  **配置 Secrets：** 在您的 GitHub 仓库设置中 (`Settings` -> `Secrets and variables` -> `Actions`)，添加以下仓库 secrets：
-    *   `DOCKERHUB_USERNAME`：您的 Docker Hub 用户名。
-    *   `DOCKERHUB_TOKEN`：具有推送权限的 Docker Hub 访问令牌。**请勿使用您的密码。**
-3.  **推送到 GitHub：** 将您的本地仓库推送到 GitHub。Action 将自动触发。
-
-该工作流将使用 `latest` 和 Git 提交的 SHA 为镜像打标签。
-
 ## 文件说明
 
 *   `Dockerfile`: 定义了镜像的多阶段构建过程。
 *   `install-mecab.sql`: 在容器启动时执行的 SQL 脚本，用于在 MySQL 中安装 MeCab 插件。
-*   `.github/workflows/docker-publish.yml`: 用于自动构建并发布到 Docker Hub 的 GitHub Actions 工作流。

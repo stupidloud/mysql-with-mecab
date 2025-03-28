@@ -35,7 +35,7 @@ COPY install-mecab.sql /docker-entrypoint-initdb.d/
 
 # 安装运行时依赖
 RUN apt-get update && \
-    apt-get install -y --no-install-recommends mecab libmecab-dev mecab-ipadic-utf8 && \
+    apt-get install -y --no-install-recommends mecab libmecab2 mecab-ipadic-utf8 && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
