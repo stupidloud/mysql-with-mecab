@@ -30,7 +30,14 @@ jobs:
           push: true # 推送镜像
           tags: |
             kl3x/mysql-mecab:latest
-            kl3x/mysql-mecab:${{ github.sha }}
           # 启用构建缓存以加快后续构建速度 (可选)
           cache-from: type=gha
           cache-to: type=gha,mode=max
+
+      - name: Update Docker Hub description
+        uses: peter-evans/dockerhub-description@v4
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+          repository: kl3x/mysql-mecab # 确保这与上面 tags 中的仓库名称匹配
+          readme: ./README.md # 指定要用作描述的 README 文件路径
