@@ -28,6 +28,8 @@ jobs:
           context: . # 使用当前目录作为构建上下文
           file: ./Dockerfile # 指定 Dockerfile 路径
           platforms: linux/amd64,linux/arm64 # 指定构建的平台
+          build-args: | # 显式传递构建参数
+            TARGETPLATFORM
           push: true # 推送镜像
           tags: |
             kl3x/mysql-mecab:latest
