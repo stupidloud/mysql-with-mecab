@@ -1,5 +1,7 @@
 # 带 MeCab 的 MySQL Docker 镜像
 
+[English](README.md)
+
 [![Docker Image CI](https://github.com/your-github-username/your-repo-name/actions/workflows/docker-publish.yml/badge.svg)](https://github.com/your-github-username/your-repo-name/actions/workflows/docker-publish.yml)
 
 本仓库包含构建 Docker 镜像所需的文件。该镜像基于 `mysql:8.0-debian`，并集成了 [MeCab](https://taku910.github.io/mecab/) 全文解析插件。这使得在 MySQL 中能够进行日语全文搜索。
