@@ -1,5 +1,7 @@
 # MySQL with MeCab Docker Image
 
+[简体中文](README.cn.md)
+
 [![Docker Image CI](https://github.com/your-github-username/your-repo-name/actions/workflows/docker-publish.yml/badge.svg)](https://github.com/your-github-username/your-repo-name/actions/workflows/docker-publish.yml)
 
 This repository contains the necessary files to build a Docker image based on `mysql:8.0-debian` that includes the [MeCab](https://taku910.github.io/mecab/) Full-Text Parser Plugin. This allows for Japanese full-text searching capabilities within MySQL.
