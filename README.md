@@ -2,8 +2,9 @@
 
 [简体中文](README.cn.md)
 
-This repository contains the necessary files to build a Docker image based on `mysql:8.0-debian` that includes the [MeCab](https://taku910.github.io/mecab/) Full-Text Parser Plugin. This allows for Japanese full-text searching capabilities within MySQL.
+[![Docker Image CI](https://github.com/stupidloud/mysql-with-mecab/actions/workflows/docker-publish.yml/badge.svg)](https://github.com/stupidloud/mysql-with-mecab/actions/workflows/docker-publish.yml)
 
+This repository contains the necessary files to build a Docker image based on `mysql:8.0-debian` that includes the [MeCab](https://taku910.github.io/mecab/) Full-Text Parser Plugin. This allows for Japanese full-text searching capabilities within MySQL.
 ## Prerequisites
 
 *   [Docker](https://docs.docker.com/get-docker/) installed on your system.
