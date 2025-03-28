@@ -49,7 +49,7 @@ services:
     restart: always
 ```
 
-MySQL 服务启动时，MeCab 插件会自动加载（通过 `plugin-load-add` 配置）。您可以通过连接到 MySQL 实例并运行以下命令来验证安装：
+MySQL 服务启动时，MeCab 插件会自动加载（通过 `plugin-load` 配置）。您可以通过连接到 MySQL 实例并运行以下命令来验证安装：
 
 ```sql
 SHOW PLUGINS LIKE 'mecab';
@@ -60,4 +60,4 @@ SHOW PLUGINS LIKE 'mecab';
 ## 文件说明
 
 *   `Dockerfile`: 定义了镜像的多阶段构建过程。
-*   `mecab.cnf`: MySQL 配置文件，使用 plugin-load-add 参数在服务启动时自动加载 MeCab 插件。
+*   `mecab.cnf`: MySQL 配置文件，使用 `plugin-load` 参数在服务启动时自动加载 MeCab 插件。
