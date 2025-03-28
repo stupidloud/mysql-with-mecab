@@ -1,6 +1,6 @@
-# 使用官方 MySQL 8.0 Debian 镜像作为基础
+# 使用官方 MySQL 8.0 镜像作为基础
 ARG TARGETPLATFORM
-FROM mysql:8.0-debian AS builder
+FROM mysql:8.0 AS builder
 
 # 设置环境变量，避免交互式提示
 ENV DEBIAN_FRONTEND=noninteractive
@@ -26,7 +26,7 @@ RUN mkdir build && cd build && \
 WORKDIR /usr/src/mysql-server/build
 RUN make -j$(nproc) mecab_parser
 # 最终镜像
-FROM mysql:8.0-debian
+FROM mysql:8.0
 
 # 复制 MeCab 插件
 COPY --from=builder /usr/src/mysql-server/build/plugin_output_directory/libpluginmecab.so /usr/lib/mysql/plugin/
