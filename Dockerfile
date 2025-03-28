@@ -24,14 +24,15 @@ RUN mkdir build && cd build && \
 # 编译 MeCab 插件
 WORKDIR /usr/src/mysql-server/build
 RUN make -j$(nproc) mecab_parser
+
 # 最终镜像
 FROM mysql:8.0-debian
 
 # 复制 MeCab 插件
 COPY --from=builder /usr/src/mysql-server/build/plugin_output_directory/libpluginmecab.so /usr/lib/mysql/plugin/
 
-# 添加初始化脚本
-COPY install-mecab.sql /docker-entrypoint-initdb.d/
+# 添加 MeCab 插件配置文件 - 使用plugin-load-add方式加载插件
+COPY mecab.cnf /etc/mysql/conf.d/
 
 # 安装运行时依赖
 RUN apt-get update && \

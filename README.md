@@ -49,7 +49,7 @@ services:
     restart: always
 ```
 
-After the container starts, the `install-mecab.sql` script will automatically run, installing the MeCab plugin. You can verify the installation by connecting to the MySQL instance and running:
+When MySQL service starts, the MeCab plugin is automatically loaded (via the `plugin-load-add` configuration). You can verify the installation by connecting to the MySQL instance and running:
 
 ```sql
 SHOW PLUGINS LIKE 'mecab';
@@ -60,4 +60,4 @@ SHOW PLUGINS LIKE 'mecab';
 ## Files
 
 *   `Dockerfile`: Defines the multi-stage build process for the image.
-*   `install-mecab.sql`: SQL script executed on container startup to install the MeCab plugin within MySQL.
+*   `mecab.cnf`: MySQL configuration file that uses the plugin-load-add parameter to automatically load the MeCab plugin when the server starts.
