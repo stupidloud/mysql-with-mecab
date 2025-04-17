@@ -4,7 +4,7 @@
 
 [![Docker Image CI](https://github.com/stupidloud/mysql-with-mecab/actions/workflows/docker-publish.yml/badge.svg)](https://github.com/stupidloud/mysql-with-mecab/actions/workflows/docker-publish.yml)
 
-本仓库包含构建 Docker 镜像所需的文件。该镜像基于 `mysql:8.0-debian`，并集成了 [MeCab](https://taku910.github.io/mecab/) 全文解析插件。这使得在 MySQL 中能够进行日语全文搜索。
+本仓库包含构建 Docker 镜像所需的文件。该镜像基于 `mysql:8.4-debian`，并集成了 [MeCab](https://taku910.github.io/mecab/) 全文解析插件。这使得在 MySQL 中能够进行日语全文搜索。
 ## 先决条件
 
 *   系统中已安装 [Docker](https://docs.docker.com/get-docker/)。

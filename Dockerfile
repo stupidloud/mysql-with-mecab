@@ -1,20 +1,47 @@
-# 使用官方 MySQL 8.0 Debian 镜像作为基础
-FROM mysql:8.0-debian AS builder
+# 使用官方 MySQL 8.4 Oracle Linux 9 镜像作为基础
+FROM mysql:8.4 AS builder
 
-# 设置环境变量，避免交互式提示
-ENV DEBIAN_FRONTEND=noninteractive
+# 设置环境变量
+ENV MYSQL_VERSION=8.4
 
-# 安装编译依赖和 MeCab，以及运行时依赖
-RUN apt-get update && \
-    apt-get install -y --no-install-recommends \
-        g++ make git cmake libssl-dev libncurses-dev libtirpc-dev pkg-config bison mecab libmecab-dev mecab-ipadic-utf8 ca-certificates && \
-    update-ca-certificates && \
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/*
+# 安装编译依赖和 MeCab
+RUN microdnf -y update && \
+    microdnf -y install dnf dnf-plugins-core && \
+    dnf config-manager --set-enabled ol9_codeready_builder && \
+    microdnf -y install \
+        gcc-toolset-12 \
+        gcc-toolset-12-gcc \
+        gcc-toolset-12-gcc-c++ \
+        gcc-toolset-12-binutils \
+        gcc-toolset-12-annobin-annocheck \
+        gcc-toolset-12-annobin-plugin-gcc \
+        make \
+        git \
+        cmake \
+        openssl-devel \
+        ncurses-devel \
+        libtirpc \
+        libtirpc-devel \
+        rpcgen \
+        pkg-config \
+        bison \
+        ca-certificates \
+        mecab \
+        mecab-devel \
+        mecab-ipadic \
+        mecab-ipadic-EUCJP && \
+    microdnf clean all
+
+# 启用 gcc-toolset-12
+SHELL [ "/bin/bash", "-c" ]
+ENV PATH=/opt/rh/gcc-toolset-12/root/usr/bin:$PATH
+ENV LD_LIBRARY_PATH=/opt/rh/gcc-toolset-12/root/usr/lib64:/opt/rh/gcc-toolset-12/root/usr/lib:$LD_LIBRARY_PATH
+ENV MANPATH=/opt/rh/gcc-toolset-12/root/usr/share/man:$MANPATH
+ENV PKG_CONFIG_PATH=/opt/rh/gcc-toolset-12/root/usr/lib64/pkgconfig:$PKG_CONFIG_PATH
 
 # 获取 MySQL 源码
 WORKDIR /usr/src
-RUN git clone --depth 1 --branch 8.0 https://github.com/mysql/mysql-server.git mysql-server
+RUN git clone --depth 1 --branch 8.4 https://github.com/mysql/mysql-server.git mysql-server
 
 # 创建构建目录并配置 CMake，移除调试信息
 WORKDIR /usr/src/mysql-server
@@ -26,21 +53,20 @@ WORKDIR /usr/src/mysql-server/build
 RUN make -j$(nproc) mecab_parser
 
 # 最终镜像
-FROM mysql:8.0-debian
+FROM mysql:8.4
 
 # 复制 MeCab 插件
-COPY --from=builder /usr/src/mysql-server/build/plugin_output_directory/libpluginmecab.so /usr/lib/mysql/plugin/
+COPY --from=builder /usr/src/mysql-server/build/plugin_output_directory/libpluginmecab.so /usr/lib64/mysql/plugin/
 
-# 添加 MeCab 插件配置文件 - 使用plugin-load-add方式加载插件
+# 添加 MeCab 插件配置文件
 COPY mecab.cnf /etc/mysql/conf.d/
 
 # 安装运行时依赖
-RUN apt-get update && \
-    apt-get install -y --no-install-recommends mecab libmecab2 mecab-ipadic-utf8 && \
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/*
-
-# 恢复交互式环境设置
-ENV DEBIAN_FRONTEND=dialog
+RUN microdnf -y update && \
+    microdnf -y install \
+        mecab \
+        mecab-ipadic \
+        mecab-ipadic-EUCJP && \
+    microdnf clean all
 
 # 基础镜像的 CMD 会启动 mysqld
